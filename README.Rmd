@@ -1,0 +1,34 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+##Why should i use this package?
+You should use this package for producing tide tables from past data.
+
+##How do i use it?
+
+Import your data set first and transform it to a readable form. See attached data 'observation' for an example data frame.
+```{r}
+library(TideTables)
+observation[1:10, ]
+
+sapply(observation,typeof)
+
+```
+You can now use your data as input for the function 'TideTable'. Setting the periods for analyzing and synthesizing and wait for the table to be produced.
+
+```{r, eval=FALSE}
+mytidetable<-TideTable(dataInput = observation, asdate = observation$observation_date[1], astime ="00:00:00", aedate= "1991/05/01", aetime = "00:00:00", ssdate = "2010/01/01", sstime = "00:00:00", sedate = "2011/01/01", setime = "00:00:00")
+
+```

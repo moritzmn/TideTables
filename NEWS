@@ -1,0 +1,9 @@
+TideTables 0.0.2
+----------------
+
+Changes:
+
+* The Funcs function was changed. The computation of the relevant astronomical velocities is now more accurate. It now returns three values 
+  as a list.
+* The calculation of tmhwi is now more accurate and is put into the function EstimateTmhwi
+* The TideTable function is now faster.
