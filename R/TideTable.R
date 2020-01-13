@@ -137,7 +137,6 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", asdate, astime, aedate,
   
   for(k4 in 1 : 4) {    
     predictor     <- design.frame[k == k4, numm]
-    #design.matrix <- matrix(nrow = length(predictor), ncol = 89)
     
     design.matrix <- matrix(nrow = length(predictor), ncol = matrix.cols)
     
