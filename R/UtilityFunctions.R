@@ -240,10 +240,11 @@ PlotTides <- function(data){
 #' @param input Should be a data.table object with three columns d_days, high_low and height, where 
 #' d_days is a vector of fraction of days since 1900/01/01 00:00:00, high_low indicating a high water(1)
 #' or a low water(0), height is the corresponding height
+#' @param strict If strict is true (default), the computations are more sharp.
 #' @return Returns the mean high water intervall in UTC
 #' @importFrom chron chron
 #' @export
-EstimateTmhwi <- function(input){
+EstimateTmhwi <- function(input, strict = TRUE){
   
   tperiode.m2  <- 360 / 28.9841042
   tmean.moon   <- tperiode.m2 * 2
@@ -304,11 +305,16 @@ EstimateTmhwi <- function(input){
        & (check.matrix[((mh + 2) %% 96) + 1, 1] < 0)
        & (check.matrix[((mh + 3) %% 96) + 1, 1] < 0)
        & (check.matrix[((mh + 4) %% 96) + 1, 1] < 0)) {
-      if(check.matrix[i, 2] > check.matrix[(mh - 1%%i) + 1, 2] &
-         check.matrix[i, 2] >= check.matrix[(mh + 1%%i) + 1, 2]){
+      if(strict) {
+        if(check.matrix[i, 2] > check.matrix[(mh - 1%%i) + 1, 2] &
+           check.matrix[i, 2] >= check.matrix[(mh + 1%%i) + 1, 2]){
+          mmax           <- mmax + 1
+          mhistmax[mmax] <- i
+        }
+      } else {
         mmax           <- mmax + 1
         mhistmax[mmax] <- i
-      }
+          }
     }
   }
   tmhwi <- as.numeric(input[mhist %in% mhistmax][order(mean_h, decreasing = TRUE)][1][, mhist])
