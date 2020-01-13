@@ -1,8 +1,8 @@
 Package: TideTables
 Type: Package
 Title: Tide Analysis and Prediction of Predominantly Semi-Diurnal Tides
-Version: 0.0.2
-Date: 2017-09-11
+Version: 0.0.3
+Date: 2019-10-23
 Authors@R: c(
     person("Moritz","Mueller-Navarra", email="muellernavarra@gmail.com",role=c("aut","cre")),
     person("Sylvin","Mueller-Navarra", email="4@sylvin.de",role="aut"),
