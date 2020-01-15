@@ -246,6 +246,8 @@ PlotTides <- function(data){
 #' @export
 EstimateTmhwi <- function(input, strict = TRUE){
   
+  input <- input[high_low == 1]
+  
   tperiode.m2  <- 360 / 28.9841042
   tmean.moon   <- tperiode.m2 * 2
   tm24         <- tmean.moon / 24
@@ -275,9 +277,15 @@ EstimateTmhwi <- function(input, strict = TRUE){
   input[, mhist := as.numeric(floor(96 * (d_days - tmmt_numm) / tm24) + 1)]
   input[, n_mhist := .N, by = mhist]
   input[, mean_h := mean(height), by = mhist]
+  input[, sd.h := 3*sd(height), by = mhist]
+  input <- input[(height <= mean_h + sd.h) & (height >= mean_h - sd.h)]
+  
+  input[, mean_h := mean(height), by = mhist]
+  input[, n_mhist := .N, by = mhist]
+  
   setkey(input, "mhist")
   
-  input <- unique(input, by = "mhist")[high_low == 1][order(mhist)]
+  input <- unique(input, by = "mhist")[order(mhist)]
   check.matrix <- matrix(nrow = 96, ncol = 3)
   
   for(i in 1L : 96L){
@@ -301,10 +309,10 @@ EstimateTmhwi <- function(input, strict = TRUE){
        & (check.matrix[((mh - 3) %% 96) + 1, 1] > 0) 
        & (check.matrix[((mh - 2) %% 96) + 1, 1] > 0)
        & (check.matrix[((mh - 1) %% 96) + 1, 1] >= 0)
+       & (check.matrix[((mh)) + 1, 1] < 0)
        & (check.matrix[((mh + 1) %% 96) + 1, 1] < 0)
        & (check.matrix[((mh + 2) %% 96) + 1, 1] < 0)
-       & (check.matrix[((mh + 3) %% 96) + 1, 1] < 0)
-       & (check.matrix[((mh + 4) %% 96) + 1, 1] < 0)) {
+       & (check.matrix[((mh + 3) %% 96) + 1, 1] < 0)) {
       if(strict) {
         if(check.matrix[i, 2] > check.matrix[(mh - 1%%i) + 1, 2] &
            check.matrix[i, 2] >= check.matrix[(mh + 1%%i) + 1, 2]){
