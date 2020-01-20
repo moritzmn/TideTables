@@ -267,6 +267,7 @@ EstimateTmhwi <- function(input, strict = TRUE){
   height    <- NULL
   high_low  <- NULL
   mean_h    <- NULL
+  sd.h      <- NULL
   mhist     <- NULL
   n_mhist   <- NULL
   tmmt_numm <- NULL
@@ -329,15 +330,19 @@ EstimateTmhwi <- function(input, strict = TRUE){
           }
     }
   }
-  prod <- vector()
-  mhist_m <- mhist_m[, !is.na((colSums(mhist_m))), drop = FALSE]
-  for(i in 1: ncol(mhist_m)) {
-    temp <- input[mhist %in% mhist_m[,i]][, c("mhist", "n_mhist", "mean_h")]
-    prod[i] <- temp[, sum(n_mhist*mean_h)/sum(n_mhist)]
+  if(strict) {
+    tmhwi <- as.numeric(input[mhist %in% mhistmax][order(mean_h, decreasing = TRUE)][1][, mhist]) 
+  } else {
+    prod <- vector()
+    mhist_m <- mhist_m[, !is.na((colSums(mhist_m))), drop = FALSE]
+    for(i in 1: ncol(mhist_m)) {
+      temp <- input[mhist %in% mhist_m[,i]][, c("mhist", "n_mhist", "mean_h")]
+      prod[i] <- temp[, sum(n_mhist*mean_h)/sum(n_mhist)]
+    }
+    ind <- mhist_m[2, which.max(prod)]
+    tmhwi <- as.numeric(input[mhist == ind, mhist])
+    
   }
-  ind <- mhist_m[2, which.max(prod)]
-  #tmhwi <- as.numeric(input[mhist %in% mhistmax][order(mean_h, decreasing = TRUE)][1][, mhist])
-  tmhwi <- as.numeric(input[mhist == ind, mhist])
   tmhwi <- tm24 / 96 * (tmhwi - 0.5)
   tmhwi <- 24 * tmhwi
   return(tmhwi)
