@@ -8,6 +8,7 @@
 #' @param dataInput A data frame with the columns observation_date, observation_time, high_or_low_water and height. See attached data for correct formats.
 #' @param otz The time zone of the observations
 #' @param hwi The average of all intervals between the Moon's transit (upper or lower) over the Greenwich meridian and the following high or low waters for all phases of the Moon is known as mean high water lunitidal interval and is abbreviated to high              water interval (hwi). Please only supply a value, when you are sure. Otherwise leave the default value "99:99" untouched.            hwi is then computed for you.
+#' @param sharp_hwi Default is TRUE, which results in a sharp hwi computation. Set on FALSE if you analyze shorter time intervalls and EstimateTmhwi function returns NA.
 #' @param asdate A string indication the date you want the analysis to start with. Format: "yyyy/mm/dd".
 #' @param astime A string indicating the time you want the analysis to start with. Format: "hh:mm:ss"
 #' @param aedate A string indication the date you want the analysis to end with. Format: "yyyy/mm/dd".
@@ -36,7 +37,7 @@
 #' @importFrom stats lm.fit
 #' @importFrom stats sd
 #' @export
-TideTable <- function(dataInput, otz = 1, hwi = "99:99", asdate, astime, aedate, aetime, ssdate, sstime, sedate, setime, stz = 1) {
+TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdate, astime, aedate, aetime, ssdate, sstime, sedate, setime, stz = 1) {
   
   chron.origin <- chron(dates. = "1900/01/01", 
                         times. = "00:00:00",
@@ -69,7 +70,7 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", asdate, astime, aedate,
   
   if (unlist(strsplit(hwi, ":"))[1] == "99") {
     #Compute tmhwi here
-    tmhwi           <- EstimateTmhwi(input = mhist.table) / 24
+    tmhwi           <- EstimateTmhwi(input = mhist.table, strict = sharp_hwi) / 24
   } else {
     tmhwi <- as.numeric(unlist(strsplit(hwi, ":"))[1]) / 24 + as.numeric(unlist(strsplit(hwi, ":"))[2]) / 1440
   }
