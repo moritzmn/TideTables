@@ -152,8 +152,8 @@ NumCulm <- function(t, tmhwi){
   ttdiff          <- tt - tmoon.0
   ttdiff          <- ttdiff * 24 + tperiode.m2 / 4
   tm2             <- ttdiff / tperiode.m2 
-  nummk4$numm     <- floor(tm2 / 2)
-  nummk4$k4       <- 1 + (floor(tm2 * 2 ) %% 4)
+  nummk4$numm     <- as.numeric(floor(tm2 / 2))
+  nummk4$k4       <- as.numeric(1 + (floor(tm2 * 2 ) %% 4))
   
   return(nummk4)
 }
@@ -303,16 +303,19 @@ EstimateTmhwi <- function(input, strict = TRUE){
   
   mmax     <- 0
   mhistmax <- vector()
+  mhist_m  <- matrix(nrow = 3, ncol = 96)
   for(i in 1L : 96L) {
     mh <- i - 1
-    if((check.matrix[((mh - 4) %% 96) + 1, 1] > 0) 
-       & (check.matrix[((mh - 3) %% 96) + 1, 1] > 0) 
+    if(
+      #(check.matrix[((mh - 4) %% 96) + 1, 1] > 0) & 
+      (check.matrix[((mh - 3) %% 96) + 1, 1] > 0) 
        & (check.matrix[((mh - 2) %% 96) + 1, 1] > 0)
        & (check.matrix[((mh - 1) %% 96) + 1, 1] >= 0)
-       & (check.matrix[((mh)) + 1, 1] < 0)
+       & (check.matrix[((mh)) + 1, 1] <= 0)
        & (check.matrix[((mh + 1) %% 96) + 1, 1] < 0)
        & (check.matrix[((mh + 2) %% 96) + 1, 1] < 0)
-       & (check.matrix[((mh + 3) %% 96) + 1, 1] < 0)) {
+       #& (check.matrix[((mh + 3) %% 96) + 1, 1] < 0)
+       ) {
       if(strict) {
         if(check.matrix[i, 2] > check.matrix[(mh - 1%%i) + 1, 2] &
            check.matrix[i, 2] >= check.matrix[(mh + 1%%i) + 1, 2]){
@@ -322,10 +325,19 @@ EstimateTmhwi <- function(input, strict = TRUE){
       } else {
         mmax           <- mmax + 1
         mhistmax[mmax] <- i
+        mhist_m[,mmax] <- c((mh - 1%%i) + 1, i, (mh + 1%%i) + 1)
           }
     }
   }
-  tmhwi <- as.numeric(input[mhist %in% mhistmax][order(mean_h, decreasing = TRUE)][1][, mhist])
+  prod <- vector()
+  mhist_m <- mhist_m[, !is.na((colSums(mhist_m))), drop = FALSE]
+  for(i in 1: ncol(mhist_m)) {
+    temp <- input[mhist %in% mhist_m[,i]][, c("mhist", "n_mhist", "mean_h")]
+    prod[i] <- temp[, sum(n_mhist*mean_h)/sum(n_mhist)]
+  }
+  ind <- mhist_m[2, which.max(prod)]
+  #tmhwi <- as.numeric(input[mhist %in% mhistmax][order(mean_h, decreasing = TRUE)][1][, mhist])
+  tmhwi <- as.numeric(input[mhist == ind, mhist])
   tmhwi <- tm24 / 96 * (tmhwi - 0.5)
   tmhwi <- 24 * tmhwi
   return(tmhwi)
