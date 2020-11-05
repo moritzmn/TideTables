@@ -121,7 +121,9 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
   
   tdiff.analyse    <- -astart.nummculm$numm + aend.nummculm$numm + 1
   #Compute Funcs for theoretical xi to get the length of the column vector
-  matrix.cols      <- length(Funcs(tdiff = tdiff.analyse, xi = aend.nummculm$numm)[[3]])
+  omega_t          <- FindOmega(tdiff = tdiff.analyse)
+  func_t           <- ComputeAfunc(omega = omega_t, xi = aend.nummculm$numm)
+  matrix.cols      <- length(func_t[[3]])
   
   #Subsetting design.frame
   
@@ -142,17 +144,19 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
     design.matrix <- matrix(nrow = length(predictor), ncol = matrix.cols)
     
     for(i in 1 : nrow(design.matrix)) {
-      design.matrix[i, 1 : matrix.cols] <- Funcs(xi = predictor[i], tdiff = tdiff.analyse)[[3]]
+      design.matrix[i, 1 : matrix.cols] <- ComputeAfunc(xi = predictor[i], omega = omega_t)[[3]]
     }
     
     for(l in c("stunden.transit", "height")) {
-      col <- as.symbol(l)  
-      predictant       <- design.frame[k == k4, l, with = FALSE]
-      temp.design[[l]] <- data.table(design.matrix, predictant, predictor)    
-      temp.design[[l]] <- temp.design[[l]][(eval(col) >= (mean(eval(col)) - 3 * sd(eval(col)))) & (eval(col) <= (mean(eval(col)) +  3 * sd(eval(col))))]
-      i.analyse[k4, l]  <- nrow(temp.design[[l]])
-      lm.fitting[[l]]   <- lm.fit(x = as.matrix(temp.design[[l]][, !c(l,"predictor"), with = FALSE]),
-                                  y = temp.design[[l]][, eval(col)])
+      predictant <- design.frame[k == k4, ..l]
+      mean_p     <- predictant[, mean(get(l))]
+      sd_p       <- predictant[, 3 * sd(get(l))]
+      
+      temp.design[[l]] <- data.table(design.matrix, predictant, predictor)
+      temp.design[[l]] <- temp.design[[l]][(get(l) >= mean_p -  sd_p) & (get(l) <= mean_p + sd_p)]
+      lm.fitting[[l]]  <- lm.fit(x = as.matrix(temp.design[[l]][, !c(..l, "predictor")]),
+                                 y = temp.design[[l]][, get(l)])
+      i.analyse[k4, l] <- nrow(temp.design[[l]])
     }
     lm.fits[[k4]]      <- lm.fitting
     design.list[[k4]]  <- temp.design
@@ -175,7 +179,7 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
   ii <- 0L
   for (i in start.nummculm$numm : end.nummculm$numm) {
     ii <- ii + 1L
-    afunc <- Funcs(xi = i, tdiff = tdiff.analyse)[[3]]
+    afunc <- ComputeAfunc(xi = i, omega = omega_t)[[3]]
     for (k in 1 : 4) {
       m <- m + 1L
       for (l in c("stunden.transit", "height")) {        
@@ -216,13 +220,12 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
   prediction_date <- NULL
   prediction_time <- NULL
   V1              <- NULL
-  time.height[, date_time := chron(dates.  = V1,
-                                   origin. = c(month = 1, day = 1, year = 1900))]
-  time.height[, prediction_date := dates(date_time)]
-  time.height[, prediction_time := paste(hours(date_time), 
-                                         minutes(date_time), 
-                                         seconds(date_time), 
-                                         sep = ":")]
+  
+  time.height[ ,date_time := format(chron(dates. = V1, 
+                                 origin. = c(month = 1, day = 1, year = 1900)),
+                                 "%Y/%m/%d %H:%M:%S" )]
+  time.height[, c("prediction_date", "prediction_time") := tstrsplit(date_time, split = " ")]
+  
   setnames(time.height, c("V6","V5","V4","V3","V2", "V1"), 
            c("i", "st.transit", "height", "upper_or_lower_transit",
              "high_or_low_water", "transit"))
@@ -239,7 +242,7 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
   tide.table <- time.height[, c("prediction_date",
                                "prediction_time",
                                "high_or_low_water",
-                               "height"), with=FALSE]
+                               "height")]
   #we return a list called report containing the tide table, diff.analyse, i.analyse and lm.coeff
   report              <- list()
   report$c.table      <- time.height
