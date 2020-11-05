@@ -20,4 +20,4 @@ Depends:
     R (>= 3.2.2)
 LazyData: true
 License: GPL-3
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
