@@ -4,12 +4,14 @@
 \alias{EstimateTmhwi}
 \title{Calculates tmhwi}
 \usage{
-EstimateTmhwi(input)
+EstimateTmhwi(input, strict = TRUE)
 }
 \arguments{
 \item{input}{Should be a data.table object with three columns d_days, high_low and height, where 
 d_days is a vector of fraction of days since 1900/01/01 00:00:00, high_low indicating a high water(1)
 or a low water(0), height is the corresponding height}
+
+\item{strict}{If strict is true (default), the computations are more sharp.}
 }
 \value{
 Returns the mean high water intervall in UTC
