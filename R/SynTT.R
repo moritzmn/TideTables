@@ -43,9 +43,13 @@ SynTT <- function(model = NULL, ssdate, sstime, sedate, setime, stz = 1) {
   afunc        <- vector(mode = "double")
   coeff        <- vector(mode = "double")
   st.transit   <- vector(mode = "double")
-  time.height  <- data.table(matrix(0.0, 
-                                    ncol = 6,
-                                    nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4)))
+  # time.height  <- data.table(matrix(0.0, 
+  #                                   ncol = 6,
+  #                                   nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4)))
+  
+  time.height  <- matrix(0.0, ncol = 6,
+                         nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4))
+  
   m  <- 0L
   ii <- 0L
   stz24 <- stz / 24
@@ -79,12 +83,15 @@ SynTT <- function(model = NULL, ssdate, sstime, sedate, setime, stz = 1) {
         trans <- 0
       }
       
-      set(time.height, i = m, j = 1L, value = time1[m])
-      set(time.height, i = m, j = 2L, value = ihn)
-      set(time.height, i = m, j = 3L, value = trans)
-      set(time.height, i = m, j = 4L, value = height[m])
-      set(time.height, i = m, j = 5L, value = st.transit[m])
-      set(time.height, i = m, j = 6L, value = ii)
+      time.height[m, ] <- c(time1[m], ihn, trans, height[m],
+                            st.transit[m], ii)
+      
+      # set(time.height, i = m, j = 1L, value = time1[m])
+      # set(time.height, i = m, j = 2L, value = ihn)
+      # set(time.height, i = m, j = 3L, value = trans)
+      # set(time.height, i = m, j = 4L, value = height[m])
+      # set(time.height, i = m, j = 5L, value = st.transit[m])
+      # set(time.height, i = m, j = 6L, value = ii)
       
     }
   }
@@ -92,8 +99,9 @@ SynTT <- function(model = NULL, ssdate, sstime, sedate, setime, stz = 1) {
   prediction_date <- NULL
   prediction_time <- NULL
   V1              <- NULL
+  time.height <- as.data.table(time.height)
   
-  time.height[ ,date_time := format(chron(dates. = V1, 
+  time.height[ , date_time := format(chron(dates. = V1, 
                                           origin. = c(month = 1, day = 1, year = 1900)),
                                     "%Y/%m/%d %H:%M:%S" )]
   time.height[, c("prediction_date", "prediction_time") := tstrsplit(date_time, split = " ")]
