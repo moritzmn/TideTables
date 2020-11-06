@@ -1,16 +1,16 @@
 #' Synthesizes a Tide Table
 #' @description Synthesiszes a tide table
 #' @param model the model you built with BuildTT()
-#' @param start_date Start date of the Synthesis
-#' @param end_date End date of the Synthesis
-#' @param start_time Start time of the Synthesis
-#' @param end_time End time of the Synthesis
+#' @param ssdate Start date of the Synthesis
+#' @param sstime End date of the Synthesis
+#' @param sedate Start time of the Synthesis
+#' @param setime End time of the Synthesis
 #' @param stz The target time zone. Defaults to UTC +1 
 #' @return Returns the tide table
 #' @export
 
 
-SynTT <- function(model = NULL, start_date, end_date, start_time, end_time, stz = 1) {
+SynTT <- function(model = NULL, ssdate, sstime, sedate, setime, stz = 1) {
   
   stopifnot(class(model) == "tidetable")
   
@@ -23,6 +23,7 @@ SynTT <- function(model = NULL, start_date, end_date, start_time, end_time, stz 
   tm24    <- model[["tm24"]]
   tplus   <- model[["tplus"]]
   tmhwi   <- model[["tmhwi"]]
+  fitting.coef <- model[["fitting.coef"]]
   
   #Synthesis period
   ssdate.time <- chron(dates. = ssdate,
@@ -37,16 +38,17 @@ SynTT <- function(model = NULL, start_date, end_date, start_time, end_time, stz 
   start.nummculm  <- NumCulm(t = ssdate.time, tmhwi = tmhwi)
   end.nummculm    <- NumCulm(t = sedate.time, tmhwi = tmhwi)
   
-  time1        <- vector()
-  height       <- vector()
-  afunc        <- vector()
-  coeff        <- vector()
-  st.transit   <- vector()
+  time1        <- vector(mode = "double")
+  height       <- vector(mode = "double")
+  afunc        <- vector(mode = "double")
+  coeff        <- vector(mode = "double")
+  st.transit   <- vector(mode = "double")
   time.height  <- data.table(matrix(0.0, 
                                     ncol = 6,
                                     nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4)))
   m  <- 0L
   ii <- 0L
+  stz24 <- stz / 24
   for (i in start.nummculm$numm : end.nummculm$numm) {
     ii <- ii + 1L
     afunc <- ComputeAfunc(xi = i, omega = omega_t)[[3]] #optimize?!
@@ -59,7 +61,7 @@ SynTT <- function(model = NULL, start_date, end_date, start_time, end_time, stz 
         if (l == "stunden.transit") {
           st.transit[m] <- summe
           tmmt.numm     <- i * tm24 + tplus
-          time1[m]      <- (tmmt.numm + summe / 24 + otz / 24)
+          time1[m]      <- (tmmt.numm + summe / 24 + stz24)
           
         }
         else {
@@ -112,7 +114,7 @@ SynTT <- function(model = NULL, start_date, end_date, start_time, end_time, stz 
   time.height <- time.height[, c("prediction_date",
                                 "prediction_time",
                                 "high_or_low_water",
-                                "upper_lower_transit",
+                                "upper_or_lower_transit",
                                 "height")]
   return(time.height)
   
