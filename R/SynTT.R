@@ -1,29 +1,29 @@
 #' Synthesizes a Tide Table
-#' @description Synthesiszes a tide table
-#' @param model the model you built with BuildTT()
-#' @param ssdate Start date of the Synthesis
-#' @param sstime End date of the Synthesis
-#' @param sedate Start time of the Synthesis
-#' @param setime End time of the Synthesis
+#' @description Synthesizes a tide table, built with BuildTT()
+#' @param tmodel the model you built with BuildTT()
+#' @param ssdate Start date of the synthesis
+#' @param sstime End date of the synthesis
+#' @param sedate Start time of the synthesis
+#' @param setime End time of the synthesis
 #' @param stz The target time zone. Defaults to UTC +1 
-#' @return Returns the tide table
+#' @return Returns the tide table as a data.table
 #' @export
 
 
-SynTT <- function(model = NULL, ssdate, sstime, sedate, setime, stz = 1) {
+SynTT <- function(tmodel = NULL, ssdate, sstime, sedate, setime, stz = 1) {
   
-  stopifnot(class(model) == "tidetable")
+  stopifnot(class(tmodel) == "tidetable")
   
   chron.origin <- chron(dates. = "1900/01/01", 
                         times. = "00:00:00",
                         format = c(dates = "y/m/d", times = "h:m:s"),
                         out.format = c(dates = "y/m/d", times = "h:m:s"))
   #retrieving objects
-  omega_t <- model[["omega_t"]]
-  tm24    <- model[["tm24"]]
-  tplus   <- model[["tplus"]]
-  tmhwi   <- model[["tmhwi"]]
-  fitting.coef <- model[["fitting.coef"]]
+  omega_t <- tmodel[["omega_t"]]
+  tm24    <- tmodel[["tm24"]]
+  tplus   <- tmodel[["tplus"]]
+  tmhwi   <- tmodel[["tmhwi"]]
+  fitting.coef <- tmodel[["fitting.coef"]]
   
   #Synthesis period
   ssdate.time <- chron(dates. = ssdate,
@@ -55,7 +55,7 @@ SynTT <- function(model = NULL, ssdate, sstime, sedate, setime, stz = 1) {
   stz24 <- stz / 24
   for (i in start.nummculm$numm : end.nummculm$numm) {
     ii <- ii + 1L
-    afunc <- ComputeAfunc(xi = i, omega = omega_t)[[3]] #optimize?!
+    afunc <- ComputeAfunc(xi = i, omega = omega_t)[[3]] #optimize?
     for (k in 1 : 4) {
       m <- m + 1L
       for (l in c("stunden.transit", "height")) {        
@@ -63,13 +63,13 @@ SynTT <- function(model = NULL, ssdate, sstime, sedate, setime, stz = 1) {
         summe <- coeff %*% afunc
         
         if (l == "stunden.transit") {
-          st.transit[m] <- summe
+          st.transit <- summe
           tmmt.numm     <- i * tm24 + tplus
-          time1[m]      <- (tmmt.numm + summe / 24 + stz24)
+          time1      <- (tmmt.numm + summe / 24 + stz24) #do i need [m]?
           
         }
         else {
-          height[m] <- summe
+          height <- summe
         }   
       }
       if (k == 1 | k == 3){
@@ -83,8 +83,8 @@ SynTT <- function(model = NULL, ssdate, sstime, sedate, setime, stz = 1) {
         trans <- 0
       }
       
-      time.height[m, ] <- c(time1[m], ihn, trans, height[m],
-                            st.transit[m], ii)
+      time.height[m, ] <- c(time1, ihn, trans, height,
+                            st.transit, ii)
       
       # set(time.height, i = m, j = 1L, value = time1[m])
       # set(time.height, i = m, j = 2L, value = ihn)
