@@ -7,7 +7,7 @@
 SynTT(tmodel = NULL, ssdate, sstime, sedate, setime, stz = 1)
 }
 \arguments{
-\item{tmodel}{the tmodel you built with BuildTT()}
+\item{tmodel}{the model you built with BuildTT()}
 
 \item{ssdate}{Start date of the synthesis}
 
