@@ -1,3 +1,12 @@
+TideTables 0.0.3
+----------------
+
+Changes:
+
+* Introducing two new functions 'BuildTT' and 'SynTT'. Please see the readme for more informations.
+* 'TideTable' is again faster and has a new parameter strict_hwi. See Readme.
+
+
 TideTables 0.0.2
 ----------------
 
