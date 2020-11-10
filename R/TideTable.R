@@ -191,13 +191,13 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
         summe <- coeff %*% afunc
         
         if (l == "stunden.transit") {
-          st.transit[m] <- summe
+          st.transit <- summe
           tmmt.numm     <- i * tm24 + tplus
-          time1[m]      <- (tmmt.numm + summe / 24 + otz / 24)
+          time1      <- (tmmt.numm + summe / 24 + otz / 24)
           
         }
         else {
-          height[m] <- summe
+          height <- summe
         }   
       }
       if (k == 1 | k == 3){
