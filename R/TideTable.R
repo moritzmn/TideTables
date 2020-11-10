@@ -51,7 +51,7 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
                         format = c(dates = "y/m/d", times = "h:m:s"),
                         out.format = c(dates = "y/m/d", times = "h:m:s")) - chron.origin
   
-  tplus        <- tmoon.0 + 24.2491 / 1440.00
+  tplus        <- as.numeric(tmoon.0 + 24.2491 / 1440.00)
   numm         <- NULL
   
 
