@@ -173,8 +173,12 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
   afunc        <- vector(mode = "double")
   coeff        <- vector(mode = "double")
   st.transit   <- vector(mode = "double")
-  time.height  <- data.table(matrix(0.0, ncol = 6,
-                                    nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4)))
+  # time.height  <- data.table(matrix(0.0, ncol = 6,
+  #                                   nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4)))
+  
+  time.height  <- matrix(0.0, ncol = 6,
+                         nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4))
+  
   m  <- 0L
   ii <- 0L
   for (i in start.nummculm$numm : end.nummculm$numm) {
@@ -207,12 +211,15 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
         trans <- 0
       }
       
-      set(time.height, i = m, j = 1L, value = time1[m])
-      set(time.height, i = m, j = 2L, value = ihn)
-      set(time.height, i = m, j = 3L, value = trans)
-      set(time.height, i = m, j = 4L, value = height[m])
-      set(time.height, i = m, j = 5L, value = st.transit[m])
-      set(time.height, i = m, j = 6L, value = ii)
+      time.height[m, ] <- c(time1, ihn, trans, height,
+                            st.transit, ii)
+      
+      # set(time.height, i = m, j = 1L, value = time1[m])
+      # set(time.height, i = m, j = 2L, value = ihn)
+      # set(time.height, i = m, j = 3L, value = trans)
+      # set(time.height, i = m, j = 4L, value = height[m])
+      # set(time.height, i = m, j = 5L, value = st.transit[m])
+      # set(time.height, i = m, j = 6L, value = ii)
       
     }
   }
