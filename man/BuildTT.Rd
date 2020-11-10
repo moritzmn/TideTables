@@ -4,23 +4,34 @@
 \alias{BuildTT}
 \title{Builds a TideTable model}
 \usage{
-BuildTT(data, otz = 1, start_date, start_time, end_date, end_time)
+BuildTT(dataInput, otz = 1, asdate, astime, aedate, aetime,
+  hwi = "99:99", sharp_hwi = TRUE)
 }
 \arguments{
-\item{data}{the data frame with observation date, observation time and height.}
+\item{dataInput}{the data frame with observation date, observation time and height.}
 
 \item{otz}{time zone of the observations. Default is 1 (UTC + 1)}
 
-\item{start_date}{The start date}
+\item{asdate}{The start date}
 
-\item{start_time}{The start time}
+\item{astime}{The start time}
 
-\item{end_date}{The end date}
+\item{aedate}{The end date}
 
-\item{end_time}{The end time}
+\item{aetime}{The end time}
+
+\item{hwi}{The high water intervall. Format: "hh::mm"}
+
+\item{sharp_hwi}{should the hwi computation be sharp? Default is TRUE}
 }
 \value{
-Returns a object of class "tidetable"
+Returns a object of class "tidetable" which contains following elements:
+\item{fitting.coeff}{Coefficients for the eight fitted linear models used in the synthesis}
+\item{diff.analyse}{Time in days spanning the analysis}
+\item{omega_t}{Return value of FindOmega()}
+\item{tm24}{How many different cases where used in the analysis}
+\item{tplus}{How many different cases where used in the analysis}
+\item{tmhwi}{Mean high water intervall}
 }
 \description{
 Builds a TideTable model of class "tidetable".
