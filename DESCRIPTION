@@ -21,3 +21,5 @@ Depends:
 LazyData: true
 License: GPL-3
 RoxygenNote: 6.1.1
+Suggests: 
+    testthat (>= 2.1.0)
