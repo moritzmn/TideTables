@@ -1,15 +1,23 @@
 #' Builds a TideTable model
 #' @description Builds a TideTable model of class "tidetable".
-#' @param data the data frame with observation date, observation time and height. 
+#' @param dataInput the data frame with observation date, observation time and height. 
 #' @param otz time zone of the observations. Default is 1 (UTC + 1)
-#' @param start_date The start date
-#' @param start_time The start time
-#' @param end_date The end date
-#' @param end_time The end time
-#' @return Returns a object of class "tidetable"
+#' @param asdate The start date
+#' @param astime The start time
+#' @param aedate The end date
+#' @param aetime The end time
+#' @param hwi The high water intervall. Format: "hh::mm"
+#' @param sharp_hwi should the hwi computation be sharp? Default is TRUE
+#' @return Returns a object of class "tidetable" which contains following elements:
+#' \item{fitting.coeff}{Coefficients for the eight fitted linear models used in the synthesis}
+#' \item{diff.analyse}{Time in days spanning the analysis}
+#' \item{omega_t}{Return value of FindOmega()}
+#' \item{tm24}{How many different cases where used in the analysis}
+#' \item{tplus}{How many different cases where used in the analysis}
+#' \item{tmhwi}{Mean high water intervall}
 #' @export
 
-BuildTT <- function(data, otz = 1, start_date, start_time, end_date, end_time) {
+BuildTT <- function(dataInput, otz = 1, asdate, astime, aedate, aetime, hwi = "99:99", sharp_hwi = TRUE) {
   
   #Constants
   chron.origin <- chron(dates. = "1900/01/01", 
@@ -21,20 +29,21 @@ BuildTT <- function(data, otz = 1, start_date, start_time, end_date, end_time) {
                         format = c(dates = "y/m/d", times = "h:m:s"),
                         out.format = c(dates = "y/m/d", times = "h:m:s")) - chron.origin
   
-  tplus        <- tmoon.0 + 24.2491 / 1440.00
+  tplus        <- as.numeric(tmoon.0 + 24.2491 / 1440.00)
   tperiode.m2  <- 360 / 28.9841042
   tmean.moon   <- tperiode.m2 * 2
   tm24         <- tmean.moon / 24
   numm         <- NULL
+  k <- NULL
   
   #Reading the data
-  chron.beob      <- chron(dates. = as.character(data$observation_date),
-                           times. = as.character(data$observation_time),
+  chron.beob      <- chron(dates. = as.character(dataInput$observation_date),
+                           times. = as.character(dataInput$observation_time),
                            format = c(dates = "y/m/d", times = "h:m:s"),
                            out.format = c(dates = "y/m/d", times = "h:m:s"))
   
   diff.days       <- (chron.beob - chron.origin) - otz / 24 
-  high.low        <- data$high_or_low_water
+  high.low        <- dataInput$high_or_low_water
   
   #Analysis date and times as chron
   asdate.time <- chron(dates. = asdate,
@@ -127,7 +136,7 @@ BuildTT <- function(data, otz = 1, start_date, start_time, end_date, end_time) {
   }
   
   #return object and class setting
-  tt_object <- list("tdiff" = tdiff.analyse,
+  tt_object <- list("diff.analyse" = tdiff.analyse,
                     "omega_t" = omega_t,
                     "tm24" = tm24,
                     "tplus" = tplus,
