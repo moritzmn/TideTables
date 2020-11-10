@@ -168,11 +168,11 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
     })
   }
   #Synthesis
-  time1        <- vector()
-  height       <- vector()
-  afunc        <- vector()
-  coeff        <- vector()
-  st.transit   <- vector()
+  time1        <- vector(mode = "double")
+  height       <- vector(mode = "double")
+  afunc        <- vector(mode = "double")
+  coeff        <- vector(mode = "double")
+  st.transit   <- vector(mode = "double")
   time.height  <- data.table(matrix(0.0, ncol = 6,
                                     nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4)))
   m  <- 0L
