@@ -228,6 +228,8 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
   prediction_time <- NULL
   V1              <- NULL
   
+  time.height <- as.data.table(time.height)
+  
   time.height[ ,date_time := format(chron(dates. = V1, 
                                  origin. = c(month = 1, day = 1, year = 1900)),
                                  "%Y/%m/%d %H:%M:%S" )]
