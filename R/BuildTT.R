@@ -36,6 +36,7 @@ BuildTT <- function(dataInput, otz = 1, asdate, astime, aedate, aetime, hwi = "9
   numm         <- NULL
   k <- NULL
   
+  
   #Reading the data
   chron.beob      <- chron(dates. = as.character(dataInput$observation_date),
                            times. = as.character(dataInput$observation_time),
@@ -115,18 +116,23 @@ BuildTT <- function(dataInput, otz = 1, asdate, astime, aedate, aetime, hwi = "9
     }
     
     for(l in c("stunden.transit", "height")) {
-      predictant <- design.frame[k == k4, ..l]
+      # predictant <- design.frame[k == k4, ..l]
+      predictant <- design.frame[k == k4, .SD, .SDcols = l]
       mean_p     <- predictant[, mean(get(l))]
       sd_p       <- predictant[, 3 * sd(get(l))]
       
       temp.design[[l]] <- data.table(design.matrix, predictant, predictor)
       temp.design[[l]] <- temp.design[[l]][(get(l) >= mean_p -  sd_p) & (get(l) <= mean_p + sd_p)]
-      lm.fitting[[l]]  <- lm.fit(x = as.matrix(temp.design[[l]][, !c(..l, "predictor")]),
+      # lm.fitting[[l]]  <- lm.fit(x = as.matrix(temp.design[[l]][, !c(..l, "predictor")]),
+      #                            y = temp.design[[l]][, get(l)])
+      
+      lm.fitting[[l]]  <- lm.fit(x = as.matrix(temp.design[[l]][, .SD, .SDcols = !c(l, "predictor")]),
                                  y = temp.design[[l]][, get(l)])
+      
       i.analyse[k4, l] <- nrow(temp.design[[l]])
     }
     lm.fits[[k4]]      <- lm.fitting
-    design.list[[k4]]  <- temp.design
+    #design.list[[k4]]  <- temp.design
     fitting.coef[[k4]] <- lapply(lm.fitting, function(x) {
       c <- as.vector(coef(x))
       c[is.na(c)] <- 0 

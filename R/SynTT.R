@@ -6,7 +6,7 @@
 #' @param sedate Start time of the synthesis
 #' @param setime End time of the synthesis
 #' @param stz The target time zone. Defaults to UTC +1 
-#' @return Returns the tide table as a data.table
+#' @return Returns a tide table as a data.table, which is identical to c.table from TideTable 
 #' @export
 
 
