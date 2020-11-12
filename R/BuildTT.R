@@ -134,9 +134,9 @@ BuildTT <- function(dataInput, otz = 1, asdate, astime, aedate, aetime, hwi = "9
     lm.fits[[k4]]      <- lm.fitting
     #design.list[[k4]]  <- temp.design
     fitting.coef[[k4]] <- lapply(lm.fitting, function(x) {
-      c <- as.vector(coef(x))
-      c[is.na(c)] <- 0 
-      return(c)
+      c_o <- as.vector(coef(x))
+      c_o[is.na(c_o)] <- 0 
+      return(c_o)
       
     })
   }
