@@ -20,7 +20,7 @@ SynTT(tmodel = NULL, ssdate, sstime, sedate, setime, stz = 1)
 \item{stz}{The target time zone. Defaults to UTC +1}
 }
 \value{
-Returns the tide table as a data.table
+Returns a tide table as a data.table, which is identical to c.table from TideTable
 }
 \description{
 Synthesizes a tide table, built with BuildTT()
