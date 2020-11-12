@@ -65,7 +65,7 @@ SynTT <- function(tmodel = NULL, ssdate, sstime, sedate, setime, stz = 1) {
         if (l == "stunden.transit") {
           st.transit <- summe
           tmmt.numm     <- i * tm24 + tplus
-          time1      <- (tmmt.numm + summe / 24 + stz24) #do i need [m]?
+          time1      <- (tmmt.numm + summe / 24 + stz24)
           
         }
         else {
