@@ -42,7 +42,7 @@ BuildTT <- function(dataInput, otz = 1, asdate, astime, aedate, aetime, hwi = "9
                            format = c(dates = "y/m/d", times = "h:m:s"),
                            out.format = c(dates = "y/m/d", times = "h:m:s"))
   
-  diff.days       <- (chron.beob - chron.origin) - otz / 24 
+  diff.days       <- as.numeric((chron.beob - chron.origin) - otz / 24 )
   high.low        <- dataInput$high_or_low_water
   
   #Analysis date and times as chron
