@@ -119,11 +119,11 @@ SynTT <- function(tmodel = NULL, ssdate, sstime, sedate, setime, stz = 1) {
                              "height",
                              "st.transit",
                              "i"))
-  time.height <- time.height[, c("prediction_date",
-                                "prediction_time",
-                                "high_or_low_water",
-                                "upper_or_lower_transit",
-                                "height")]
+  # time.height <- time.height[, c("prediction_date",
+  #                               "prediction_time",
+  #                               "high_or_low_water",
+  #                               "upper_or_lower_transit",
+  #                               "height")]
   return(time.height)
   
   
