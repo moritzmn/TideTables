@@ -1,6 +1,6 @@
 #' Compute tide tables
 #' 
-#' @description Takes a data frame as input with date time high water and height information and returns a tide table
+#' @description Takes a data frame as input with date time, high water and height information and returns a tide table
 #' @references Horn, W. (1960) Some Recent Approaches to Tidal Problems. Int. Hydrogr. Rev. 37(2), 65-84
 #' @references  Godin, Gabriel (1972) The Analysis of Tides. Toronto, 264pp
 #' @references \url{http://tidesandcurrents.noaa.gov/publications/glossary2.pdf}
