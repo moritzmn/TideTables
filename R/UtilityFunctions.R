@@ -251,11 +251,11 @@ FindOmega <- function(tdiff) {
   
 }
 
-#' #' Returns predictor vector for design matrix
+#' Returns predictor vector for design matrix
 #' @description Returns predictor vector for design matrix from 39 astronomical angular velocities.
 #' @param xi Transit index
 #' @param omega The return value of FindOmega().
-#' @return A list with the selected angular velocities, their ranks and the predictor vector (Values between -1, 1).
+#' @return A list with the selected angular velocities, their ranks and the predictor vector (values between -1, 1).
 #' @export 
 
 ComputeAfunc <- function(omega = NULL, xi = NULL) {
