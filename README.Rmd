@@ -13,6 +13,14 @@ knitr::opts_chunk$set(
   fig.path = "README-"
 )
 ```
+
+This packages provides functions for synthesizing tide tables based on observations. Ideally you have data for a specific measuring station for the last 19 years without larger gaps. The functions are based on the Harmonic Represantation of Inequalities (HRoI) and not on the harmonic Method. Please consult the following links for a detailed description of HRoI:
+
+- {https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13}
+
+- {https://www.ocean-sci.net/15/1363/2019/}
+
+
 ##Why should i use this package?
 You should use this package for producing tide tables from past data.
 
@@ -21,14 +29,53 @@ You should use this package for producing tide tables from past data.
 Import your data set first and transform it to a readable form. See attached data 'observation' for an example data frame.
 ```{r}
 library(TideTables)
+
 observation[1:10, ]
 
 sapply(observation,typeof)
 
 ```
-You can now use your data as input for the function 'TideTable'. Setting the periods for analyzing and synthesizing and wait for the table to be produced.
 
-```{r, eval=FALSE}
-mytidetable<-TideTable(dataInput = observation, asdate = observation$observation_date[1], astime ="00:00:00", aedate= "1991/05/01", aetime = "00:00:00", ssdate = "2010/01/01", sstime = "00:00:00", sedate = "2011/01/01", setime = "00:00:00")
+You can now use your data as input for the function 'TideTable'. Setting the periods for analysis and synthesis and wait for the table to be produced.
+
+```{r}
+mytidetable <- TideTable(dataInput = observation, asdate = "1991/01/01", 
+                         astime ="12:00:00", aedate = "1992/01/01", 
+                         aetime = "12:00:00", ssdate = "1991/01/01", 
+                         sstime = "12:00:00", sedate = "1992/01/01", setime = "12:00:00")
 
 ```
+
+
+```{r}
+str(mytidetable)
+```
+
+
+As of Version 0.0.3 you can also use 'BuildTT' and 'SynTT'. 'BuildTT' returns an object of class 'tidetable', which you can use in 'SynTT' to synthesize a tide table. The model building and the synthesis is therefore decoupled. Please note that given the same analysis 'TideTable' and 'BuildTT' + 'SynTT' will always return the same synthesis (heights and times). The list item 'c.table' is equal to the output of 'SynTT'. 
+
+```{r}
+tt_model <- BuildTT(dataInput = observation, asdate = "1991/01/01", 
+                         astime ="12:00:00", aedate = "1992/01/01", 
+                         aetime = "12:00:00" )
+```
+
+```{r}
+str(tt_model)
+```
+
+
+```{r}
+my_tt    <- SynTT(tmodel = tt_model, ssdate = "1991/01/01", 
+                         sstime = "12:00:00", sedate = "1992/01/01", setime = "12:00:00")
+```
+
+```{r}
+str(my_tt)
+```
+
+```{r}
+all.equal(my_tt, mytidetable$c.table)
+```
+
+
