@@ -44,7 +44,7 @@ Returns a list with elements of the analysis, fitting and the tide table for giv
 \item{i.analyse}{How many different cases where used in the analysis}
 }
 \description{
-Takes a data frame as input with date time high water and height information and returns a tide table
+Takes a data frame as input with date time, high water and height information and returns a tide table
 }
 \examples{
 TideTable(dataInput=observation, asdate=observation$observation_date[1], 
