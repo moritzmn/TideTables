@@ -4,7 +4,8 @@
 #' @references Horn, W. (1960) Some Recent Approaches to Tidal Problems. Int. Hydrogr. Rev. 37(2), 65-84
 #' @references  Godin, Gabriel (1972) The Analysis of Tides. Toronto, 264pp
 #' @references \url{http://tidesandcurrents.noaa.gov/publications/glossary2.pdf}
-#' @references \url{http://www.bsh.de/de/Produkte/Buecher/Berichte_/Bericht50/BSH-Bericht50.pdf}
+#' @references \url{https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13}
+#' @references \url{https://www.ocean-sci.net/15/1363/2019/}
 #' @param dataInput A data frame with the columns observation_date, observation_time, high_or_low_water and height. See attached data for correct formats.
 #' @param otz The time zone of the observations
 #' @param hwi The average of all intervals between the Moon's transit (upper or lower) over the Greenwich meridian and the following high or low waters for all phases of the Moon is known as mean high water lunitidal interval and is abbreviated to high              water interval (hwi). Please only supply a value, when you are sure. Otherwise leave the default value "99:99" untouched.            hwi is then computed for you.
