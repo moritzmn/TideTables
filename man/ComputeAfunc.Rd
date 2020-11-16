@@ -2,7 +2,7 @@
 % Please edit documentation in R/UtilityFunctions.R
 \name{ComputeAfunc}
 \alias{ComputeAfunc}
-\title{#' Returns predictor vector for design matrix}
+\title{Returns predictor vector for design matrix}
 \usage{
 ComputeAfunc(omega = NULL, xi = NULL)
 }
@@ -12,7 +12,7 @@ ComputeAfunc(omega = NULL, xi = NULL)
 \item{xi}{Transit index}
 }
 \value{
-A list with the selected angular velocities, their ranks and the predictor vector (Values between -1, 1).
+A list with the selected angular velocities, their ranks and the predictor vector (values between -1, 1).
 }
 \description{
 Returns predictor vector for design matrix from 39 astronomical angular velocities.
