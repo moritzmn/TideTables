@@ -147,7 +147,8 @@ BuildTT <- function(dataInput, otz = 1, asdate, astime, aedate, aetime, hwi = "9
                     "tm24" = tm24,
                     "tplus" = tplus,
                     "tmhwi" = tmhwi,
-                    "fitting.coef" = fitting.coef)
+                    "fitting.coef" = fitting.coef,
+                    "otz" = otz)
   
   class(tt_object) <- "tidetable"
   
