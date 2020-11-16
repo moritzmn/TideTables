@@ -1,11 +1,11 @@
 #' Synthesizes a Tide Table
 #' @description Synthesizes a tide table, built with BuildTT()
-#' @param tmodel the model you built with BuildTT()
+#' @param tmodel The model you built with BuildTT()
 #' @param ssdate Start date of the synthesis
 #' @param sstime End date of the synthesis
 #' @param sedate Start time of the synthesis
 #' @param setime End time of the synthesis
-#' @param stz The target time zone. Defaults to UTC +1 
+#' @param stz The target time zone. Defaults to UTC + 1 
 #' @return Returns a tide table as a data.table, which is identical to c.table from TideTable 
 #' @export
 
@@ -19,6 +19,7 @@ SynTT <- function(tmodel = NULL, ssdate, sstime, sedate, setime, stz = 1) {
                         format = c(dates = "y/m/d", times = "h:m:s"),
                         out.format = c(dates = "y/m/d", times = "h:m:s"))
   #retrieving objects
+  otz     <- tmodel[["otz"]]
   omega_t <- tmodel[["omega_t"]]
   tm24    <- tmodel[["tm24"]]
   tplus   <- tmodel[["tplus"]]
@@ -52,7 +53,7 @@ SynTT <- function(tmodel = NULL, ssdate, sstime, sedate, setime, stz = 1) {
   
   m  <- 0L
   ii <- 0L
-  stz24 <- stz / 24
+  stz24 <- otz / 24
   for (i in start.nummculm$numm : end.nummculm$numm) {
     ii <- ii + 1L
     afunc <- ComputeAfunc(xi = i, omega = omega_t)[[3]] #optimize?
