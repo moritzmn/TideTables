@@ -26,10 +26,10 @@
 #' \item{diff.analyse}{Time in days spanning the analysis}
 #' \item{i.analyse}{How many different cases where used in the analysis}
 #' @examples 
-#' TideTable(dataInput=observation, asdate=observation$observation_date[1], 
-#' astime=observation$observation_time[1], 
-#' aedate="1991/05/01", aetime="21:00:00", ssdate="1995/01/01", 
-#' sstime="00:00:00", sedate="1995/01/31", setime="21:00:00")
+#' TideTable(dataInput = observation, asdate = "1991/01/01", 
+#' astime = "12:00:00", 
+#' aedate = "1992/01/01", aetime = "12:00:00", ssdate = "1991/01/01", 
+#' sstime = "00:00:00", sedate = "1991/01/31", setime = "21:00:00")
 #' 
 #' @import data.table
 #' @import chron
