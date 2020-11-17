@@ -5,12 +5,11 @@
 #' @param sstime End date of the synthesis
 #' @param sedate Start time of the synthesis
 #' @param setime End time of the synthesis
-#' @param stz The target time zone. Defaults to UTC + 1 
 #' @return Returns a tide table as a data.table, which is identical to c.table from TideTable 
 #' @export
 
 
-SynTT <- function(tmodel = NULL, ssdate, sstime, sedate, setime, stz = 1) {
+SynTT <- function(tmodel = NULL, ssdate, sstime, sedate, setime) {
   
   stopifnot(class(tmodel) == "tidetable")
   
