@@ -142,7 +142,7 @@ FindOmega <- function(tdiff) {
   #rad <- 0.017453292519943
   #xi  <- rad * xi
   
-  omegas <- vector()
+  omegas <- vector(mode = "numeric", length = 39)
   omegas[ 1]<-0.0548098
   omegas[ 2]<-0.2306165
   omegas[ 3]<-1.0201944
@@ -185,7 +185,7 @@ FindOmega <- function(tdiff) {
   
   omega_pos <- omegas
   
-  iranks <- vector()
+  iranks <- vector(mode = "logical", length = 39)
   iranks[ 1]<-6
   iranks[ 2]<-13
   iranks[ 3]<-7
@@ -347,6 +347,7 @@ EstimateTmhwi <- function(input, strict = TRUE){
   input[, numm := floor((d_days - tplus) / tm24)]
   input[, tmmt_numm := numm * tm24 + tplus]
   input[, mhist := as.numeric(floor(96 * (d_days - tmmt_numm) / tm24) + 1)]
+  
   input[, n_mhist := .N, by = mhist]
   input[, mean_h := mean(height), by = mhist]
   input[, sd.h := 3*sd(height), by = mhist]
@@ -355,10 +356,10 @@ EstimateTmhwi <- function(input, strict = TRUE){
   input[, mean_h := mean(height), by = mhist]
   input[, n_mhist := .N, by = mhist]
   
-  setkey(input, "mhist")
+  setkey(input, "mhist") #why here
   
   input <- unique(input, by = "mhist")[order(mhist)]
-  check.matrix <- matrix(nrow = 96, ncol = 3)
+  check.matrix <- matrix(data = NA_real_, nrow = 96, ncol = 3)
   
   for(i in 1L : 96L){
     mh <- i - 1
@@ -374,8 +375,8 @@ EstimateTmhwi <- function(input, strict = TRUE){
   }
   
   mmax     <- 0
-  mhistmax <- vector()
-  mhist_m  <- matrix(nrow = 3, ncol = 96)
+  mhistmax <- vector(mode = "numeric")
+  mhist_m  <- matrix(data = NA_real_, nrow = 3, ncol = 96)
   for(i in 1L : 96L) {
     mh <- i - 1
     if(
@@ -404,7 +405,7 @@ EstimateTmhwi <- function(input, strict = TRUE){
   if(strict) {
     tmhwi <- as.numeric(input[mhist %in% mhistmax][order(mean_h, decreasing = TRUE)][1][, mhist]) 
   } else {
-    prod <- vector()
+    prod <- vector(mode = "numeric")
     mhist_m <- mhist_m[, !is.na((colSums(mhist_m))), drop = FALSE]
     for(i in 1: ncol(mhist_m)) {
       temp <- input[mhist %in% mhist_m[,i]][, c("mhist", "n_mhist", "mean_h")]
