@@ -2,18 +2,18 @@
 #' @description Builds a TideTable model of class "tidetable".
 #' @param dataInput the data frame with observation date, observation time and height. 
 #' @param otz time zone of the observations. Default is 1 (UTC + 1)
-#' @param asdate The start date
-#' @param astime The start time
-#' @param aedate The end date
-#' @param aetime The end time
+#' @param asdate The start date.Format: "yyyy/mm/dd"
+#' @param astime The start time. Format: "hh:mm:ss"
+#' @param aedate The end date. Format: "yyyy/mm/dd" 
+#' @param aetime The end time. Format: "hh:mm:ss"
 #' @param hwi The high water intervall. Format: "hh::mm"
 #' @param sharp_hwi should the hwi computation be sharp? Default is TRUE
 #' @return Returns a object of class "tidetable" which contains following elements:
 #' \item{fitting.coeff}{Coefficients for the eight fitted linear models used in the synthesis}
 #' \item{diff.analyse}{Time in days spanning the analysis}
 #' \item{omega_t}{Return value of FindOmega()}
-#' \item{tm24}{How many different cases where used in the analysis}
-#' \item{tplus}{How many different cases where used in the analysis}
+#' \item{tm24}{Internal constant}
+#' \item{tplus}{Internal constant}
 #' \item{tmhwi}{Mean high water intervall}
 #' @export
 

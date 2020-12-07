@@ -1,10 +1,10 @@
 #' Synthesizes a Tide Table
 #' @description Synthesizes a tide table, built with BuildTT()
 #' @param tmodel The model you built with BuildTT()
-#' @param ssdate Start date of the synthesis
-#' @param sstime End date of the synthesis
-#' @param sedate Start time of the synthesis
-#' @param setime End time of the synthesis
+#' @param ssdate Start date of the synthesis. Format: "yyyy/mm/dd"
+#' @param sstime Start time of the synthesis Format: "hh:mm:ss".
+#' @param sedate End date of the synthesis. Format: "yyyy/mm/dd"
+#' @param setime End time of the synthesis. Format: "hh:mm:ss"
 #' @return Returns a tide table as a data.table, which is identical to c.table from TideTable 
 #' @export
 
