@@ -46,9 +46,6 @@ SynTT <- function(tmodel = NULL, ssdate, sstime, sedate, setime) {
   afunc        <- vector(mode = "double")
   coeff        <- vector(mode = "double")
   st.transit   <- vector(mode = "double")
-  # time.height  <- data.table(matrix(0.0, 
-  #                                   ncol = 6,
-  #                                   nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4)))
   
   time.height  <- matrix(0.0, ncol = 6,
                          nrow = ((end.nummculm[["numm"]] - start.nummculm[["numm"]] + 1) * 4))
@@ -88,14 +85,6 @@ SynTT <- function(tmodel = NULL, ssdate, sstime, sedate, setime) {
       
       time.height[m, ] <- c(time1, ihn, trans, height,
                             st.transit, ii)
-      
-      # set(time.height, i = m, j = 1L, value = time1[m])
-      # set(time.height, i = m, j = 2L, value = ihn)
-      # set(time.height, i = m, j = 3L, value = trans)
-      # set(time.height, i = m, j = 4L, value = height[m])
-      # set(time.height, i = m, j = 5L, value = st.transit[m])
-      # set(time.height, i = m, j = 6L, value = ii)
-      
     }
   }
   date_time       <- NULL
@@ -122,11 +111,6 @@ SynTT <- function(tmodel = NULL, ssdate, sstime, sedate, setime) {
                              "height",
                              "st.transit",
                              "i"))
-  # time.height <- time.height[, c("prediction_date",
-  #                               "prediction_time",
-  #                               "high_or_low_water",
-  #                               "upper_or_lower_transit",
-  #                               "height")]
   return(time.height)
   
   
