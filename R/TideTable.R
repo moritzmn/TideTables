@@ -66,7 +66,9 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
   
   #Computation of tmhwi, when not supplied by user
   
-  mhist.table     <- data.table(d_days = diff.days, high_low = high.low, height = dataInput[["height"]])
+  mhist.table     <- data.table(d_days = diff.days, 
+                                high_low = high.low, 
+                                height = dataInput[["height"]])
   
   if (unlist(strsplit(hwi, ":"))[1] == "99") {
     #Compute tmhwi here
@@ -178,8 +180,6 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
   afunc        <- vector(mode = "double")
   coeff        <- vector(mode = "double")
   st.transit   <- vector(mode = "double")
-  # time.height  <- data.table(matrix(0.0, ncol = 6,
-  #                                   nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4)))
   
   time.height  <- matrix(0.0, ncol = 6,
                          nrow = ((end.nummculm[["numm"]] - start.nummculm[["numm"]] + 1) * 4))
@@ -218,14 +218,6 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
       
       time.height[m, ] <- c(time1, ihn, trans, height,
                             st.transit, ii)
-      
-      # set(time.height, i = m, j = 1L, value = time1[m])
-      # set(time.height, i = m, j = 2L, value = ihn)
-      # set(time.height, i = m, j = 3L, value = trans)
-      # set(time.height, i = m, j = 4L, value = height[m])
-      # set(time.height, i = m, j = 5L, value = st.transit[m])
-      # set(time.height, i = m, j = 6L, value = ii)
-      
     }
   }
   date_time       <- NULL
@@ -257,7 +249,7 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
                                "prediction_time",
                                "high_or_low_water",
                                "height")]
-  #we return a list called report containing the tide table, diff.analyse, i.analyse and lm.coeff
+  #we return a list containing c.table, tide table, diff.analyse, i.analyse and lm.coeff
   report              <- list(
     "c.table"      = time.height,
     "tide.table"   = tide.table,
@@ -266,13 +258,7 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
     "lm.coeff"     = fitting.coef,
     "tmhwi"        = tmhwi
   )
-  # report$c.table      <- time.height
-  # report$tide.table   <- tide.table
-  # report$diff.analyse <- tdiff.analyse
-  # report$i.analyse    <- i.analyse
-  # report$lm.coeff     <- fitting.coef
-  # report$tmhwi        <- tmhwi
-  
+
   return(report)
 }
 
