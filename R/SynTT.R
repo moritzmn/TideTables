@@ -5,7 +5,10 @@
 #' @param sstime Start time of the synthesis Format: "hh:mm:ss".
 #' @param sedate End date of the synthesis. Format: "yyyy/mm/dd"
 #' @param setime End time of the synthesis. Format: "hh:mm:ss"
-#' @return Returns a tide table as a data.table, which is identical to c.table from TideTable 
+#' @return Returns a tide table as a data.table, which is identical to c.table from TideTable
+#' @examples 
+#' \dontrun{SynTT(tmodel = tt_model, ssdate = "1991/01/01", 
+#' sstime = "12:00:00", sedate = "1992/01/01", setime = "12:00:00")}
 #' @export
 
 
@@ -48,12 +51,12 @@ SynTT <- function(tmodel = NULL, ssdate, sstime, sedate, setime) {
   #                                   nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4)))
   
   time.height  <- matrix(0.0, ncol = 6,
-                         nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4))
+                         nrow = ((end.nummculm[["numm"]] - start.nummculm[["numm"]] + 1) * 4))
   
   m  <- 0L
   ii <- 0L
   stz24 <- otz / 24
-  for (i in start.nummculm$numm : end.nummculm$numm) {
+  for (i in start.nummculm[["numm"]] : end.nummculm[["numm"]]) {
     ii <- ii + 1L
     afunc <- ComputeAfunc(xi = i, omega = omega_t)[[3]] #optimize?
     for (k in 1 : 4) {

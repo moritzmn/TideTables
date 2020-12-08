@@ -15,6 +15,9 @@
 #' \item{tm24}{Internal constant}
 #' \item{tplus}{Internal constant}
 #' \item{tmhwi}{Mean high water intervall}
+#' @examples 
+#' BuildTT(dataInput = observation, asdate = "1991/01/01", 
+#' astime ="12:00:00", aedate = "1992/01/01", aetime = "12:00:00")
 #' @export
 
 BuildTT <- function(dataInput, otz = 1, asdate, astime, aedate, aetime, hwi = "99:99", sharp_hwi = TRUE) {
@@ -38,13 +41,13 @@ BuildTT <- function(dataInput, otz = 1, asdate, astime, aedate, aetime, hwi = "9
   
   
   #Reading the data
-  chron.beob      <- chron(dates. = as.character(dataInput$observation_date),
-                           times. = as.character(dataInput$observation_time),
+  chron.beob      <- chron(dates. = as.character(dataInput[["observation_date"]]),
+                           times. = as.character(dataInput[["observation_time"]]),
                            format = c(dates = "y/m/d", times = "h:m:s"),
                            out.format = c(dates = "y/m/d", times = "h:m:s"))
   
   diff.days       <- as.numeric((chron.beob - chron.origin) - otz / 24 )
-  high.low        <- dataInput$high_or_low_water
+  high.low        <- dataInput[["high_or_low_water"]]
   
   #Analysis date and times as chron
   asdate.time <- chron(dates. = asdate,
@@ -60,7 +63,7 @@ BuildTT <- function(dataInput, otz = 1, asdate, astime, aedate, aetime, hwi = "9
   
   
   #Computation of tmhwi, when not supplied by user
-  mhist.table     <- data.table(d_days = diff.days, high_low = high.low, height = dataInput$height)
+  mhist.table     <- data.table(d_days = diff.days, high_low = high.low, height = dataInput[["height"]])
   
   if (unlist(strsplit(hwi, ":"))[1] == "99") {
     #Compute tmhwi here
@@ -70,13 +73,13 @@ BuildTT <- function(dataInput, otz = 1, asdate, astime, aedate, aetime, hwi = "9
   }
   
   nummk4          <- NumCulm(t = diff.days, tmhwi = tmhwi)
-  tmmt.numm       <- nummk4$numm * tm24 + tplus
+  tmmt.numm       <- nummk4[["numm"]] * tm24 + tplus
   stunden.transit <- (diff.days - tmmt.numm) * 24
   
-  design.frame  <- data.table(numm            = nummk4$numm,
-                              k               = nummk4$k4,
+  design.frame  <- data.table(numm            = nummk4[["numm"]],
+                              k               = nummk4[["k4"]],
                               stunden.transit = stunden.transit,
-                              height          = dataInput$height,
+                              height          = dataInput[["height"]],
                               high.low        = high.low)
   
   #removing rows where k+high.low is odd
@@ -89,13 +92,13 @@ BuildTT <- function(dataInput, otz = 1, asdate, astime, aedate, aetime, hwi = "9
   aend.nummculm    <- NumCulm(t = aedate.time, tmhwi = tmhwi)
   
   #Computing Funcs for all cases
-  tdiff.analyse    <- -astart.nummculm$numm + aend.nummculm$numm + 1
+  tdiff.analyse    <- aend.nummculm[["numm"]] - astart.nummculm[["numm"]] + 1
   #Compute Funcs for theoretical xi to get the length of the column vector
   omega_t          <- FindOmega(tdiff = tdiff.analyse)
-  func_t           <- ComputeAfunc(omega = omega_t, xi = aend.nummculm$numm)
+  func_t           <- ComputeAfunc(omega = omega_t, xi = aend.nummculm[["numm"]])
   matrix.cols      <- length(func_t[[3]])
   
-  design.frame     <- design.frame[(numm >= astart.nummculm$numm) & (numm <= aend.nummculm$numm)]
+  design.frame     <- design.frame[(numm >= astart.nummculm[["numm"]]) & (numm <= aend.nummculm[["numm"]])]
   
   lm.fitting          <- list()
   lm.fits             <- list()

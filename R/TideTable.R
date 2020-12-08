@@ -56,17 +56,17 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
   
 
   
-  chron.beob      <- chron(dates. = as.character(dataInput$observation_date),
-                           times. = as.character(dataInput$observation_time),
+  chron.beob      <- chron(dates. = as.character(dataInput[["observation_date"]]),
+                           times. = as.character(dataInput[["observation_time"]]),
                            format = c(dates = "y/m/d", times = "h:m:s"),
                            out.format = c(dates = "y/m/d", times = "h:m:s"))
   
   diff.days       <- as.numeric((chron.beob - chron.origin) - otz / 24) 
-  high.low        <- dataInput$high_or_low_water
+  high.low        <- dataInput[["high_or_low_water"]]
   
   #Computation of tmhwi, when not supplied by user
   
-  mhist.table     <- data.table(d_days = diff.days, high_low = high.low, height = dataInput$height)
+  mhist.table     <- data.table(d_days = diff.days, high_low = high.low, height = dataInput[["height"]])
   
   if (unlist(strsplit(hwi, ":"))[1] == "99") {
     #Compute tmhwi here
@@ -76,13 +76,13 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
   }
   
   nummk4          <- NumCulm(t = diff.days, tmhwi = tmhwi)
-  tmmt.numm       <- nummk4$numm * tm24 + tplus
+  tmmt.numm       <- nummk4[["numm"]] * tm24 + tplus
   stunden.transit <- (diff.days - tmmt.numm) * 24
   
-  design.frame  <- data.table(numm            = nummk4$numm,
-                              k               = nummk4$k4,
+  design.frame  <- data.table(numm            = nummk4[["numm"]],
+                              k               = nummk4[["k4"]],
                               stunden.transit = stunden.transit,
-                              height          = dataInput$height,
+                              height          = dataInput[["height"]],
                               high.low        = high.low)
   
   #removing rows where k+high.low is odd
@@ -119,15 +119,15 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
   
   #Computing Funcs for all cases
   
-  tdiff.analyse    <- -astart.nummculm$numm + aend.nummculm$numm + 1
+  tdiff.analyse    <- aend.nummculm[["numm"]] - astart.nummculm[["numm"]] + 1
   #Compute Funcs for theoretical xi to get the length of the column vector
   omega_t          <- FindOmega(tdiff = tdiff.analyse)
-  func_t           <- ComputeAfunc(omega = omega_t, xi = aend.nummculm$numm)
+  func_t           <- ComputeAfunc(omega = omega_t, xi = aend.nummculm[["numm"]])
   matrix.cols      <- length(func_t[[3]])
   
   #Subsetting design.frame
   
-  design.frame     <- design.frame[(numm >= astart.nummculm$numm) & (numm <= aend.nummculm$numm)]
+  design.frame     <- design.frame[(numm >= astart.nummculm[["numm"]]) & (numm <= aend.nummculm[["numm"]])]
   
   lm.fitting          <- list()
   lm.fits             <- list()
@@ -182,11 +182,11 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
   #                                   nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4)))
   
   time.height  <- matrix(0.0, ncol = 6,
-                         nrow = ((end.nummculm$numm - start.nummculm$numm + 1) * 4))
+                         nrow = ((end.nummculm[["numm"]] - start.nummculm[["numm"]] + 1) * 4))
   
   m  <- 0L
   ii <- 0L
-  for (i in start.nummculm$numm : end.nummculm$numm) {
+  for (i in start.nummculm[["numm"]] : end.nummculm[["numm"]]) {
     ii <- ii + 1L
     afunc <- ComputeAfunc(xi = i, omega = omega_t)[[3]]
     for (k in 1 : 4) {
@@ -258,13 +258,20 @@ TideTable <- function(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE, asdat
                                "high_or_low_water",
                                "height")]
   #we return a list called report containing the tide table, diff.analyse, i.analyse and lm.coeff
-  report              <- list()
-  report$c.table      <- time.height
-  report$tide.table   <- tide.table
-  report$diff.analyse <- tdiff.analyse
-  report$i.analyse    <- i.analyse
-  report$lm.coeff     <- fitting.coef
-  report$tmhwi        <- tmhwi
+  report              <- list(
+    "c.table"      = time.height,
+    "tide.table"   = tide.table,
+    "diff.analyse" = tdiff.analyse,
+    "i.analyse"    = i.analyse,
+    "lm.coeff"     = fitting.coef,
+    "tmhwi"        = tmhwi
+  )
+  # report$c.table      <- time.height
+  # report$tide.table   <- tide.table
+  # report$diff.analyse <- tdiff.analyse
+  # report$i.analyse    <- i.analyse
+  # report$lm.coeff     <- fitting.coef
+  # report$tmhwi        <- tmhwi
   
   return(report)
 }
