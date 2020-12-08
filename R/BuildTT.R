@@ -63,7 +63,9 @@ BuildTT <- function(dataInput, otz = 1, asdate, astime, aedate, aetime, hwi = "9
   
   
   #Computation of tmhwi, when not supplied by user
-  mhist.table     <- data.table(d_days = diff.days, high_low = high.low, height = dataInput[["height"]])
+  mhist.table     <- data.table(d_days = diff.days, 
+                                high_low = high.low, 
+                                height = dataInput[["height"]])
   
   if (unlist(strsplit(hwi, ":"))[1] == "99") {
     #Compute tmhwi here
