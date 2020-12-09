@@ -113,5 +113,4 @@ SynTT <- function(tmodel = NULL, ssdate, sstime, sedate, setime) {
                              "i"))
   return(time.height)
   
-  
 }
