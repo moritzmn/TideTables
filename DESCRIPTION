@@ -2,7 +2,7 @@ Package: TideTables
 Type: Package
 Title: Tide Analysis and Prediction of Predominantly Semi-Diurnal Tides
 Version: 0.0.3
-Date: 2019-10-23
+Date: 2020-12-15
 Authors@R: c(
     person("Moritz","Mueller-Navarra", email="muellernavarra@gmail.com",role=c("aut","cre")),
     person("Sylvin","Mueller-Navarra", email="4@sylvin.de",role="aut"),
@@ -14,12 +14,12 @@ Description: Tide analysis and prediction of predominantly semi-diurnal tides
     taken into account, which particularly affects the height calculation. The main
     objective of this package is to produce tide tables.
 Imports:
-    chron (>= 2.3-47),
-    data.table (>= 1.9.6)
+    chron (>= 2.3-54),
+    data.table (>= 1.13.2)
 Depends:
-    R (>= 3.2.2)
+    R (>= 3.6.0)
 LazyData: true
 License: GPL-3
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Suggests: 
     testthat (>= 2.1.0)
