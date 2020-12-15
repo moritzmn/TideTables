@@ -2,26 +2,33 @@
 % Please edit documentation in R/SynTT.R
 \name{SynTT}
 \alias{SynTT}
-\title{Synthesizes a Tide Table}
+\title{Synthesizes a tide table}
 \usage{
-SynTT(tmodel = NULL, ssdate, sstime, sedate, setime, stz = 1)
+SynTT(tmodel = NULL, ssdate, sstime, sedate, setime)
 }
 \arguments{
-\item{tmodel}{the model you built with BuildTT()}
+\item{tmodel}{The model you built with BuildTT()}
 
-\item{ssdate}{Start date of the synthesis}
+\item{ssdate}{Start date of the synthesis. Format: "yyyy/mm/dd"}
 
-\item{sstime}{End date of the synthesis}
+\item{sstime}{Start time of the synthesis Format: "hh:mm:ss".}
 
-\item{sedate}{Start time of the synthesis}
+\item{sedate}{End date of the synthesis. Format: "yyyy/mm/dd"}
 
-\item{setime}{End time of the synthesis}
-
-\item{stz}{The target time zone. Defaults to UTC +1}
+\item{setime}{End time of the synthesis. Format: "hh:mm:ss"}
 }
 \value{
-Returns a tide table as a data.table, which is identical to c.table from TideTable
+Returns a tide table as a data.table, which is identical to c.table computed with TideTable().
 }
 \description{
-Synthesizes a tide table, built with BuildTT()
+Synthesizes a tide table, built with BuildTT().
+}
+\examples{
+\dontrun{SynTT(tmodel = tt_model, ssdate = "1991/01/01", 
+sstime = "12:00:00", sedate = "1992/01/01", setime = "12:00:00")}
+}
+\references{
+\url{https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13}
+
+\url{https://doi.org/10.5194/os-15-1363-2019}
 }

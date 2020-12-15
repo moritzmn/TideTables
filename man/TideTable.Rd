@@ -2,11 +2,23 @@
 % Please edit documentation in R/TideTable.R
 \name{TideTable}
 \alias{TideTable}
-\title{Compute tide tables}
+\title{Computes a tide table}
 \usage{
-TideTable(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE,
-  asdate, astime, aedate, aetime, ssdate, sstime, sedate, setime,
-  stz = 1)
+TideTable(
+  dataInput,
+  otz = 1,
+  hwi = "99:99",
+  sharp_hwi = TRUE,
+  asdate,
+  astime,
+  aedate,
+  aetime,
+  ssdate,
+  sstime,
+  sedate,
+  setime,
+  stz = 1
+)
 }
 \arguments{
 \item{dataInput}{A data frame with the columns observation_date, observation_time, high_or_low_water and height. See attached data for correct formats.}
@@ -15,7 +27,7 @@ TideTable(dataInput, otz = 1, hwi = "99:99", sharp_hwi = TRUE,
 
 \item{hwi}{The average of all intervals between the Moon's transit (upper or lower) over the Greenwich meridian and the following high or low waters for all phases of the Moon is known as mean high water lunitidal interval and is abbreviated to high              water interval (hwi). Please only supply a value, when you are sure. Otherwise leave the default value "99:99" untouched.            hwi is then computed for you.}
 
-\item{sharp_hwi}{Default is TRUE, which results in a sharp hwi computation. Set on FALSE if you analyze shorter time intervalls and EstimateTmhwi function returns NA.}
+\item{sharp_hwi}{Default is TRUE, which results in a sharp hwi computation. Set on FALSE if you analyze shorter time intervals and EstimateTmhwi function returns NA.}
 
 \item{asdate}{A string indication the date you want the analysis to start with. Format: "yyyy/mm/dd".}
 
@@ -47,10 +59,10 @@ Returns a list with elements of the analysis, fitting and the tide table for giv
 Takes a data frame as input with date time, high water and height information and returns a tide table
 }
 \examples{
-TideTable(dataInput=observation, asdate=observation$observation_date[1], 
-astime=observation$observation_time[1], 
-aedate="1991/05/01", aetime="21:00:00", ssdate="1995/01/01", 
-sstime="00:00:00", sedate="1995/01/31", setime="21:00:00")
+TideTable(dataInput = observation, asdate = "1991/01/01", 
+astime = "12:00:00", 
+aedate = "1992/01/01", aetime = "12:00:00", ssdate = "1991/01/01", 
+sstime = "00:00:00", sedate = "1991/01/31", setime = "21:00:00")
 
 }
 \references{
@@ -58,7 +70,7 @@ Horn, W. (1960) Some Recent Approaches to Tidal Problems. Int. Hydrogr. Rev. 37(
 
 Godin, Gabriel (1972) The Analysis of Tides. Toronto, 264pp
 
-\url{http://tidesandcurrents.noaa.gov/publications/glossary2.pdf}
+\url{https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13}
 
-\url{http://www.bsh.de/de/Produkte/Buecher/Berichte_/Bericht50/BSH-Bericht50.pdf}
+\url{https://doi.org/10.5194/os-15-1363-2019}
 }

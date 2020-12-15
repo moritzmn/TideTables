@@ -4,13 +4,15 @@
 \name{observation}
 \alias{observation}
 \title{Sample file of high and low water times and heights}
-\format{A data frame with 26819 rows and 4 variables
+\format{
+A data frame with 26819 rows and 4 variables
 \describe{
-  \item{observation_date}{date of tide, character value in "yyyy/mm/dd" format}
-  \item{observation_time}{time of tide, character value in "hh:mm:ss" format}
+  \item{observation_date}{date of tide, "yyyy/mm/dd" format, character}
+  \item{observation_time}{time of tide, "hh:mm:ss" format, character}
   \item{high_or_low_water}{indication whether high (1) or low water (0) was present given date and time, integer}
-  \item{height}{height of the tide, numeric value}
-}}
+  \item{height}{height of the tide, numeric}
+}
+}
 \usage{
 observation
 }

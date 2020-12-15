@@ -14,8 +14,8 @@ or a low water(0), height is the corresponding height}
 \item{strict}{If strict is true (default), the computations are more sharp.}
 }
 \value{
-Returns the mean high water intervall in UTC
+Returns the mean high water interval in UTC
 }
 \description{
-This functions computes an estimate for the mean high water intervall (tmhwi) in UTC
+This functions computes an estimate for the mean high water interval (tmhwi) in UTC
 }
