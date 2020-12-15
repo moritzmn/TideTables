@@ -1,6 +1,6 @@
 #' Builds a TideTable model
 #' @description Builds a TideTable model of class "tidetable".
-#' @references \url{https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13}
+#' @references \url{https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13/}
 #' @references \url{https://doi.org/10.5194/os-15-1363-2019}
 #' @param dataInput the data frame with observation date, observation time and height. 
 #' @param otz time zone of the observations. Default is 1 (UTC + 1)

@@ -3,7 +3,7 @@
 #' @description Takes a data frame as input with date time, high water and height information and returns a tide table
 #' @references Horn, W. (1960) Some Recent Approaches to Tidal Problems. Int. Hydrogr. Rev. 37(2), 65-84
 #' @references  Godin, Gabriel (1972) The Analysis of Tides. Toronto, 264pp
-#' @references \url{https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13}
+#' @references \url{https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13/}
 #' @references \url{https://doi.org/10.5194/os-15-1363-2019}
 #' @param dataInput A data frame with the columns observation_date, observation_time, high_or_low_water and height. See attached data for correct formats.
 #' @param otz The time zone of the observations

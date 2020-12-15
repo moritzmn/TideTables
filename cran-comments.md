@@ -1,3 +1,9 @@
+## Resubmission
+This is a a resubmission. I changed:
+* updated invalid URLs in README.md
+* added a comment in Authors@R in the Description as suggested in your email.
+
+
 ## Test environment
 * local Win 10 64 Bit,  R 3.6.0, 
 * win-builder, R-Devel 2020-12-13 r79623, 

@@ -5,8 +5,8 @@ Version: 0.0.3
 Date: 2020-12-15
 Authors@R: c(
     person("Moritz","Mueller-Navarra", email="muellernavarra@gmail.com",role=c("aut","cre")),
-    person("Sylvin","Mueller-Navarra", email="4@sylvin.de",role="aut"),
-    person("Andreas", "Boesch", role="ctb"))
+    person("Sylvin","Mueller-Navarra", email="4@sylvin.de",role="aut", comment = "(2019) <https://doi.org/10.5194/os-15-1363-2019>"),
+    person("Andreas", "Boesch", role="ctb", comment = "(2019) <https://doi.org/10.5194/os-15-1363-2019>"))
 Description: Tide analysis and prediction of predominantly semi-diurnal tides
     with two high waters and two low waters during one lunar day (~24.842 hours,
     ~1.035 days). The analysis should preferably cover an observation period of at

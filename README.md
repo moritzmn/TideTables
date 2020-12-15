@@ -6,7 +6,7 @@ larger gaps. The functions are based on the Harmonic Representation of
 Inequalities (HRoI) and not on the harmonic method. Please consult the
 following links for a detailed description of HRoI:
 
--   {<a href="https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&amp;v=13" class="uri">https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&amp;v=13</a>}
+-   {<a href="https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&amp;v=13/" class="uri">https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&amp;v=13/</a>}
 
 -   {<a href="https://doi.org/10.5194/os-15-1363-2019" class="uri">https://doi.org/10.5194/os-15-1363-2019</a>}
 
@@ -167,5 +167,5 @@ Angular Velocities
 As of version 0.0.3 we use a new set of 39 (instead of 43 in Version
 0.0.2) angular velocities. This is motivated due to the work of Andreas
 Boesch and Sylvin Mueller-Navarra. Please check
-<a href="https://www.ocean-sci.net/15/1363/2019/" class="uri">https://www.ocean-sci.net/15/1363/2019/</a>.
+<a href="https://doi.org/10.5194/os-15-1363-2019" class="uri">https://doi.org/10.5194/os-15-1363-2019</a>.
 The old set is still available in Version 0.0.2 in the CRAN archive.

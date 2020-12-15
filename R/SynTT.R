@@ -1,6 +1,6 @@
 #' Synthesizes a tide table
 #' @description Synthesizes a tide table, built with BuildTT().
-#' @references \url{https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13}
+#' @references \url{https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13/}
 #' @references \url{https://doi.org/10.5194/os-15-1363-2019}
 #' @param tmodel The model you built with BuildTT()
 #' @param ssdate Start date of the synthesis. Format: "yyyy/mm/dd"
