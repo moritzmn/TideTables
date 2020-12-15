@@ -49,7 +49,7 @@ BuildTT(dataInput = observation, asdate = "1991/01/01",
 astime ="12:00:00", aedate = "1992/01/01", aetime = "12:00:00")
 }
 \references{
-\url{https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13}
+\url{https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13/}
 
 \url{https://doi.org/10.5194/os-15-1363-2019}
 }
