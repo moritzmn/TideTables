@@ -1,15 +1,14 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 This packages provides functions for synthesizing tide tables based on
-observations. Ideally you have data for a specific measuring station for
-the last 19 years without larger gaps. The functions are based on the
-Harmonic Represantation of Inequalities (HRoI) and not on the harmonic
-Method. Please consult the following links for a detailed description of
-HRoI:
+observations. Ideally your data spans a period of 19 years without
+larger gaps. The functions are based on the Harmonic Representation of
+Inequalities (HRoI) and not on the harmonic method. Please consult the
+following links for a detailed description of HRoI:
 
 -   {<a href="https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&amp;v=13" class="uri">https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&amp;v=13</a>}
 
--   {<a href="https://www.ocean-sci.net/15/1363/2019/" class="uri">https://www.ocean-sci.net/15/1363/2019/</a>}
+-   {<a href="https://doi.org/10.5194/os-15-1363-2019" class="uri">https://doi.org/10.5194/os-15-1363-2019</a>}
 
 \#\#Why should i use this package? You should use this package for
 producing tide tables from past data.
@@ -42,13 +41,18 @@ sapply(observation,typeof)
 
 You can now use your data as input for the function ‘TideTable’. Setting
 the periods for analysis and synthesis and wait for the table to be
-produced.
+produced. The parameter otz represents the time zone of your
+observations. The default value 1 is equal to UTC + 1. TideTable always
+returns the date/time in the same time zone of your observations. You
+might want to set the parameter ‘hwi’ yourself. If you do not override
+the default value (hwi = “99:99”) the high water interval gets estimated
+and returned.
 
 ``` r
 mytidetable <- TideTable(dataInput = observation, asdate = "1991/01/01", 
                          astime ="12:00:00", aedate = "1992/01/01", 
                          aetime = "12:00:00", ssdate = "1991/01/01", 
-                         sstime = "12:00:00", sedate = "1992/01/01", setime = "12:00:00")
+                         sstime = "12:00:00", sedate = "1992/01/01", setime = "12:00:00", otz = 1)
 ```
 
 ``` r
@@ -94,10 +98,11 @@ str(mytidetable)
 As of Version 0.0.3 you can also use ‘BuildTT’ and ‘SynTT’. ‘BuildTT’
 returns an object of class ‘tidetable’, which you can use in ‘SynTT’ to
 synthesize a tide table. The model building and the synthesis is
-therefore decoupled. Please note that given the same analysis
+therefore decoupled. Please note that given the same parameters
 ‘TideTable’ and ‘BuildTT’ + ‘SynTT’ will always return the same
-synthesis (heights and times). The list item ‘c.table’ is equal to the
-output of ‘SynTT’.
+synthesis (heights and times). The list item ‘c.table’ returned by
+‘TideTable’ is equal to the output of ‘SynTT’. The logic for setting
+‘otz’ and ‘hwi’ is documented above.
 
 ``` r
 tt_model <- BuildTT(dataInput = observation, asdate = "1991/01/01", 
@@ -107,7 +112,7 @@ tt_model <- BuildTT(dataInput = observation, asdate = "1991/01/01",
 
 ``` r
 str(tt_model)
-#> List of 6
+#> List of 7
 #>  $ diff.analyse: num 353
 #>  $ omega_t     :List of 2
 #>   ..$ : num [1:21] 1.02 2.04 11.71 13.52 15.96 ...
@@ -128,6 +133,7 @@ str(tt_model)
 #>   ..$ :List of 2
 #>   .. ..$ stunden.transit: num [1:43] 31.0318 0.02195 -0.02426 0.00326 -0.00555 ...
 #>   .. ..$ height         : num [1:43] 3.484 0.0327 -0.1543 0.0309 -0.0793 ...
+#>  $ otz         : num 1
 #>  - attr(*, "class")= chr "tidetable"
 ```
 
@@ -154,3 +160,12 @@ str(my_tt)
 all.equal(my_tt, mytidetable$c.table)
 #> [1] TRUE
 ```
+
+Angular Velocities
+------------------
+
+As of version 0.0.3 we use a new set of 39 (instead of 43 in Version
+0.0.2) angular velocities. This is motivated due to the work of Andreas
+Boesch and Sylvin Mueller-Navarra. Please check
+<a href="https://www.ocean-sci.net/15/1363/2019/" class="uri">https://www.ocean-sci.net/15/1363/2019/</a>.
+The old set is still available in Version 0.0.2 in the CRAN archive.
