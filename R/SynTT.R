@@ -1,11 +1,13 @@
-#' Synthesizes a Tide Table
-#' @description Synthesizes a tide table, built with BuildTT()
+#' Synthesizes a tide table
+#' @description Synthesizes a tide table, built with BuildTT().
+#' @references \url{https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13}
+#' @references \url{https://doi.org/10.5194/os-15-1363-2019}
 #' @param tmodel The model you built with BuildTT()
 #' @param ssdate Start date of the synthesis. Format: "yyyy/mm/dd"
 #' @param sstime Start time of the synthesis Format: "hh:mm:ss".
 #' @param sedate End date of the synthesis. Format: "yyyy/mm/dd"
 #' @param setime End time of the synthesis. Format: "hh:mm:ss"
-#' @return Returns a tide table as a data.table, which is identical to c.table from TideTable
+#' @return Returns a tide table as a data.table, which is identical to c.table computed with TideTable().
 #' @examples 
 #' \dontrun{SynTT(tmodel = tt_model, ssdate = "1991/01/01", 
 #' sstime = "12:00:00", sedate = "1992/01/01", setime = "12:00:00")}
