@@ -14,11 +14,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-This packages provides functions for synthesizing tide tables based on observations. Ideally you have data for a specific measuring station for the last 19 years without larger gaps. The functions are based on the Harmonic Represantation of Inequalities (HRoI) and not on the harmonic Method. Please consult the following links for a detailed description of HRoI:
+This packages provides functions for synthesizing tide tables based on observations. Ideally your data spans a period of 19 years without larger gaps. The functions are based on the Harmonic Representation of Inequalities (HRoI) and not on the harmonic method. Please consult the following links for a detailed description of HRoI:
 
 - {https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13}
 
-- {https://www.ocean-sci.net/15/1363/2019/}
+- {https://doi.org/10.5194/os-15-1363-2019}
 
 
 ##Why should i use this package?
@@ -36,13 +36,13 @@ sapply(observation,typeof)
 
 ```
 
-You can now use your data as input for the function 'TideTable'. Setting the periods for analysis and synthesis and wait for the table to be produced.
+You can now use your data as input for the function 'TideTable'. Setting the periods for analysis and synthesis and wait for the table to be produced. The parameter otz represents the time zone of your observations. The default value 1 is equal to UTC + 1. TideTable always returns the date/time in the same time zone of your observations. You might want to set the parameter 'hwi' yourself. If you do not override the default value (hwi = "99:99") the high water interval gets estimated and returned.
 
 ```{r}
 mytidetable <- TideTable(dataInput = observation, asdate = "1991/01/01", 
                          astime ="12:00:00", aedate = "1992/01/01", 
                          aetime = "12:00:00", ssdate = "1991/01/01", 
-                         sstime = "12:00:00", sedate = "1992/01/01", setime = "12:00:00")
+                         sstime = "12:00:00", sedate = "1992/01/01", setime = "12:00:00", otz = 1)
 
 ```
 
@@ -52,7 +52,7 @@ str(mytidetable)
 ```
 
 
-As of Version 0.0.3 you can also use 'BuildTT' and 'SynTT'. 'BuildTT' returns an object of class 'tidetable', which you can use in 'SynTT' to synthesize a tide table. The model building and the synthesis is therefore decoupled. Please note that given the same analysis 'TideTable' and 'BuildTT' + 'SynTT' will always return the same synthesis (heights and times). The list item 'c.table' is equal to the output of 'SynTT'. 
+As of Version 0.0.3 you can also use 'BuildTT' and 'SynTT'. 'BuildTT' returns an object of class 'tidetable', which you can use in 'SynTT' to synthesize a tide table. The model building and the synthesis is therefore decoupled. Please note that given the same parameters 'TideTable' and 'BuildTT' + 'SynTT' will always return the same synthesis (heights and times). The list item 'c.table' returned by 'TideTable' is equal to the output of 'SynTT'. The logic for setting 'otz' and 'hwi' is documented above. 
 
 ```{r}
 tt_model <- BuildTT(dataInput = observation, asdate = "1991/01/01", 
@@ -78,4 +78,6 @@ str(my_tt)
 all.equal(my_tt, mytidetable$c.table)
 ```
 
+## Angular Velocities
 
+As of version 0.0.3 we use a new set of 39 (instead of 43 in Version 0.0.2) angular velocities. This is motivated due to the work of Andreas Boesch and Sylvin Mueller-Navarra. Please check https://www.ocean-sci.net/15/1363/2019/. The old set is still available in Version 0.0.2 in the CRAN archive. 
