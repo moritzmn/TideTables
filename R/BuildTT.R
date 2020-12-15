@@ -1,12 +1,14 @@
 #' Builds a TideTable model
 #' @description Builds a TideTable model of class "tidetable".
+#' @references \url{https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13}
+#' @references \url{https://doi.org/10.5194/os-15-1363-2019}
 #' @param dataInput the data frame with observation date, observation time and height. 
 #' @param otz time zone of the observations. Default is 1 (UTC + 1)
 #' @param asdate The start date.Format: "yyyy/mm/dd"
 #' @param astime The start time. Format: "hh:mm:ss"
 #' @param aedate The end date. Format: "yyyy/mm/dd" 
 #' @param aetime The end time. Format: "hh:mm:ss"
-#' @param hwi The high water intervall. Format: "hh::mm"
+#' @param hwi The high water interval. Format: "hh::mm"
 #' @param sharp_hwi should the hwi computation be sharp? Default is TRUE
 #' @return Returns a object of class "tidetable" which contains following elements:
 #' \item{fitting.coeff}{Coefficients for the eight fitted linear models used in the synthesis}
@@ -14,7 +16,7 @@
 #' \item{omega_t}{Return value of FindOmega()}
 #' \item{tm24}{Internal constant}
 #' \item{tplus}{Internal constant}
-#' \item{tmhwi}{Mean high water intervall}
+#' \item{tmhwi}{Mean high water interval}
 #' @examples 
 #' BuildTT(dataInput = observation, asdate = "1991/01/01", 
 #' astime ="12:00:00", aedate = "1992/01/01", aetime = "12:00:00")
