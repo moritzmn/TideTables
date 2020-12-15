@@ -3,8 +3,12 @@ TideTables 0.0.3
 
 Changes:
 
-* Introducing two new functions 'BuildTT' and 'SynTT'. Please see the readme for more informations.
-* 'TideTable' is again faster and has a new parameter strict_hwi. See readme.
+* Introducing two new functions: BuildTT and SynTT. Please see the readme for more information.
+* TideTable is again (up to ~50 times) faster, uses less RAM and has a new parameter strict_hwi. See readme.
+* Minor changes in helper functions, which do not affect the output.
+* Using a new set of angular velocities. Please see the links provided.
+* The output format of date/time is now the same as the expected input format.
+* Two new internal functions FindOmega and ComputeAfunc introduced. For internal use only!
 
 
 TideTables 0.0.2
