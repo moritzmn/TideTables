@@ -14,7 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-This packages provides functions for synthesizing tide tables based on observations. Ideally your data spans a period of 19 years without larger gaps. The functions are based on the Harmonic Representation of Inequalities (HRoI) and not on the harmonic method. Please consult the following links for a detailed description of HRoI:
+# TideTables
+
+This package provides functions for synthesizing tide tables based on observations. Ideally your data spans a period of 19 years without larger gaps. The functions are based on the Harmonic Representation of Inequalities (HRoI) and not on the harmonic method. Please consult the following links for a detailed description of HRoI:
 
 - https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&v=13/
 

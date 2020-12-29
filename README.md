@@ -1,19 +1,25 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-This packages provides functions for synthesizing tide tables based on
+TideTables
+==========
+
+This package provides functions for synthesizing tide tables based on
 observations. Ideally your data spans a period of 19 years without
 larger gaps. The functions are based on the Harmonic Representation of
 Inequalities (HRoI) and not on the harmonic method. Please consult the
 following links for a detailed description of HRoI:
 
--   {<a href="https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&amp;v=13/" class="uri">https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&amp;v=13/</a>}
+-   <a href="https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&amp;v=13/" class="uri">https://www.bsh.de/DE/PUBLIKATIONEN/_Anlagen/Downloads/Meer_und_Umwelt/Berichte-des-BSH/Berichte-des-BSH_50_de.pdf?__blob=publicationFile&amp;v=13/</a>
 
--   {<a href="https://doi.org/10.5194/os-15-1363-2019" class="uri">https://doi.org/10.5194/os-15-1363-2019</a>}
+-   <a href="https://doi.org/10.5194/os-15-1363-2019" class="uri">https://doi.org/10.5194/os-15-1363-2019</a>
 
-\#\#Why should i use this package? You should use this package for
-producing tide tables from past data.
+Why should i use this package?
+------------------------------
 
-\#\#How do i use it?
+You should use this package for producing tide tables from past data.
+
+How do i use it?
+----------------
 
 Import your data set first and transform it to a readable form. See
 attached data ‘observation’ for an example data frame.
