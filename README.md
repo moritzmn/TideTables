@@ -21,8 +21,8 @@ You should use this package for producing tide tables from past data.
 How do i use it?
 ----------------
 
-Import your data set first and transform it to a readable form. See
-attached data ‘observation’ for an example data frame.
+Import your data set and transform it into a readable form. See attached
+data ‘observation’ for an example data frame.
 
 ``` r
 library(TideTables)
