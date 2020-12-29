@@ -4,7 +4,7 @@
 #' @references \url{https://doi.org/10.5194/os-15-1363-2019}
 #' @param dataInput the data frame with observation date, observation time and height. 
 #' @param otz time zone of the observations. Default is 1 (UTC + 1)
-#' @param asdate The start date.Format: "yyyy/mm/dd"
+#' @param asdate The start date. Format: "yyyy/mm/dd"
 #' @param astime The start time. Format: "hh:mm:ss"
 #' @param aedate The end date. Format: "yyyy/mm/dd" 
 #' @param aetime The end time. Format: "hh:mm:ss"
